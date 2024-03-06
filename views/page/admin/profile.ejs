@@ -1,0 +1,70 @@
+<div class="page-title-box">
+    <div class="row align-items-center">
+        <div class="col-sm-6">
+            <h3>Mening profilim</h3>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="/admin/index">Asosiy sahifa</a></li>
+                <li class="breadcrumb-item"><a href="/admin/profile">Mening profilim</a></li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="card col-md-6">
+    <div class="card-body users">
+
+    </div>
+</div>
+
+
+<script src="/axios.min.js"></script>
+<script src="/jquery.min.js"></script>
+<script src="/inputmask.js"></script>
+<script src="/notification/message.js"></script>
+<script>
+    const headers = { headers: { Authorization: 'Bearer ' + window.localStorage.getItem("token") } }
+    axios.get("/api/user/decode", headers).then((res) => {
+        const user = res.data.decodeToken;
+        axios.get(`/api/user/${user.id}`, headers).then(async (resp) => {
+            const data = resp.data.data
+            const users = $(".users")
+            await users.html("")
+            users.append(`
+                <label class="mt-1">F.I.O</label>
+                <input type="text" class="form-control" value="${data.name}" id="name" placeholder="Yangi nom kiriting ... ">
+                <label class="mt-3">Telefon raqam</label>
+                <input type="text" class="form-control"  value="${data.phone}"  id="telephone" placeholder="Yangi telefon raqam kiriting ...">
+                <label class="mt-3">Mening parolim</label>
+                <input type="text" class="form-control" id="password" placeholder="Yangi  kiriting ...">
+                <button class="btn btn-outline-warning mt-3" onclick="updateUser('${data._id}')">Tahrirlash</button>
+            `)
+            IMask(document.getElementById("telephone"), { mask: '998-00-000-00-00' });
+        })
+    })
+    const updateUser = (id) => {
+        const name = document.getElementById("name").value;
+        const telephone = document.getElementById("telephone").value;
+        const password = document.getElementById("password").value;
+        if (name == "" || telephone == "" || password == "") {
+            danger("Barcha ma'lumotlarni kiriting")
+        }
+        else {
+            axios.get("/api/user/decode", headers).then((res) => {
+                const user = res.data.decodeToken;
+                const body = { name: name, phone: telephone, password: password }
+                axios.put(`/api/user/${user.id}`, body, headers).then((res) => {
+                    const status = res.data.status;
+                    if (status == false) {
+                        return warning("Telefon raqamni qaytadan kiriting. Ushbu telefon raqami mavjud")
+                    }
+                    else {
+                        success("Ma'lumotlar tahrirlandi")
+                        window.location.reload()
+                    }
+                })
+            })
+        }
+    }
+</script>

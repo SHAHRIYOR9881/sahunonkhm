@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/main-logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/main-logo.png">
+    <link rel="manifest" href="/client/images/favicons/site.webmanifest">
+    <meta name="description" content="Sanitariya loyiha">
+    <link rel="stylesheet" href="/client/vendors/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/client/vendors/animate/animate.min.css">
+    <link rel="stylesheet" href="/client/vendors/animate/custom-animate.css">
+    <link rel="stylesheet" href="/client/vendors/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/client/vendors/jarallax/jarallax.css">
+    <link rel="stylesheet" href="/client/vendors/jquery-magnific-popup/jquery.magnific-popup.css">
+    <link rel="stylesheet" href="/client/vendors/nouislider/nouislider.min.css">
+    <link rel="stylesheet" href="/client/vendors/nouislider/nouislider.pips.css">
+    <link rel="stylesheet" href="/client/vendors/odometer/odometer.min.css">
+    <link rel="stylesheet" href="/client/vendors/swiper/swiper.min.css">
+    <link rel="stylesheet" href="/client/vendors/govity-icons/style.css">
+    <link rel="stylesheet" href="/client/vendors/tiny-slider/tiny-slider.min.css">
+    <link rel="stylesheet" href="/client/vendors/reey-font/stylesheet.css">
+    <link rel="stylesheet" href="/client/vendors/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="/client/vendors/owl-carousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/client/vendors/bxslider/jquery.bxslider.css">
+    <link rel="stylesheet" href="/client/vendors/bootstrap-select/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="/client/vendors/vegas/vegas.min.css">
+    <link rel="stylesheet" href="/client/vendors/jquery-ui/jquery-ui.css">
+    <link rel="stylesheet" href="/client/vendors/timepicker/timePicker.css">
+    <link rel="stylesheet" href="/client/vendors/nice-select/nice-select.css">
+    <link rel="stylesheet" href="/client/css/govity.css">
+    <link rel="stylesheet" href="/client/css/govity-responsive.css">
+    <link rel="stylesheet" href="/client/css/govity-dark.css">
+    <style>
+        @font-face {
+            font-family: "FONT";
+            src: url(/client/DidactGothic.ttf);
+        }
+
+        *,
+        body {
+            font-family: "FONT";
+            font-weight: 300;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgb(1, 153, 39);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #000000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="preloader">
+        <div class="preloader__image"></div>
+    </div>
+
+    <div class="page-wrapper">
+
+        <%- include('../components/header.ejs'); -%>
+
+            <div class="stricky-header stricked-menu main-menu">
+                <div class="sticky-header__content"></div>
+            </div>
+
+            <%- body %>
+
+                <%- include('../components/footer.ejs'); -%>
+
+    </div>
+
+
+
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
+            <div class="logo-box">
+                <a href="/" aria-label="logo image"><img src="/main-logo.png" width="94" alt=""></a>
+            </div>
+            <div class="mobile-nav__container"></div>
+            <ul class="mobile-nav__contact list-unstyled">
+
+                <li>
+                    <i class="fa fa-phone-alt"></i>
+                    <a href="tel:998672264926">+998672264926</a>
+                </li>
+                <li>
+                    <a style="color: white; margin: 0 10px; padding: 10px;" onclick="setLanguage('uz')" href="/?clang=uz">Uz</a>
+                    <a style="color: white; margin: 0 10px; padding: 10px;" onclick="setLanguage('ru')" href="/?clang=ru">Ru</a>
+                </li>
+            </ul>
+            <div class="mobile-nav__top">
+                <div class="main-menu__social">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="search-popup">
+        <div class="search-popup__overlay search-toggler"></div>
+        <div class="search-popup__content">
+            <form action="#">
+                <label for="search" class="sr-only">search here</label>
+                <input type="text" id="search" placeholder="Search Here...">
+                <button type="submit" aria-label="search submit" class="thm-btn">
+                    <i class="icon-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+    </div> -->
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="icon-right-arrow"></i></a>
+
+
+
+
+    <script src="/client/vendors/jquery/jquery-3.6.0.min.js"></script>
+    <script src="/client/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/client/vendors/jarallax/jarallax.min.js"></script>
+    <script src="/client/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js"></script>
+    <script src="/client/vendors/jquery-appear/jquery.appear.min.js"></script>
+    <script src="/client/vendors/jquery-circle-progress/jquery.circle-progress.min.js"></script>
+    <script src="/client/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="/client/vendors/jquery-validate/jquery.validate.min.js"></script>
+    <script src="/client/vendors/nouislider/nouislider.min.js"></script>
+    <script src="/client/vendors/odometer/odometer.min.js"></script>
+    <script src="/client/vendors/swiper/swiper.min.js"></script>
+    <script src="/client/vendors/tiny-slider/tiny-slider.min.js"></script>
+    <script src="/client/vendors/wnumb/wNumb.min.js"></script>
+    <script src="/client/vendors/wow/wow.js"></script>
+    <script src="/client/vendors/isotope/isotope.js"></script>
+    <script src="/client/vendors/countdown/countdown.min.js"></script>
+    <script src="/client/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="/client/vendors/bxslider/jquery.bxslider.min.js"></script>
+    <script src="/client/vendors/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script src="/client/vendors/vegas/vegas.min.js"></script>
+    <script src="/client/vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="/client/vendors/timepicker/timePicker.js"></script>
+    <script src="/client/vendors/circleType/jquery.circleType.js"></script>
+    <script src="/client/vendors/circleType/jquery.lettering.min.js"></script>
+    <script src="/client/vendors/nice-select/jquery.nice-select.min.js"></script>
+    <script src="/client/js/govity.js"></script>
+    <script>
+        window.localStorage.setItem("language", "ru")
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<div class="wrapper-page">
+    <div class="card card-pages shadow-none">
+
+        <div class="card-body">
+            <h2 class="font-24 text-center">Kirish</h2>
+            <div class="form-horizontal m-t-30">
+
+                <div class="form-group">
+                    <div class="col-12">
+                        <label>Telefon raqam</label>
+                        <input class="form-control" id="telephone" type="text"
+                            placeholder="Telefon raqamingizni kiriting ... ">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-12">
+                        <label>Parol</label>
+                        <input class="form-control" id="password" type="password"
+                            placeholder="Parolingizni kiriting ...">
+                    </div>
+                </div>
+
+                <div class="form-group text-center m-t-20">
+                    <div class="col-12">
+                        <button onclick="SignIn()" class="btn btn-primary btn-block btn-lg waves-effect waves-light"
+                            type="button">Kirish</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="/axios.min.js"></script>
+<script src="/jquery.min.js"></script>
+<script src="/inputmask.js"></script>
+<script src="/notification/message.js"></script>
+<script>
+
+    const UserPassword = document.getElementById("password")
+    const UserTelephone = document.getElementById("telephone")
+    IMask(UserTelephone, { mask: '998-00-000-00-00' });
+
+
+    const SignIn = () => {
+        const password = document.getElementById("password").value
+        const telephone = document.getElementById("telephone").value
+        if (password == "" || telephone == "") {
+            return danger("Ma'lumotni to'liq kiriting")
+        }
+        else {
+            axios.post("/api/user/login", { phone: telephone, password: password }).then((res) => {
+                const status = res.data.status;
+                const token = res.data.token;
+                const role = res.data.role;
+                if (status == false) {
+                    return warning("Telefon yoki parolda xatolik mavjud")
+                }
+                else {
+                    success("Qabul qilindi")
+                    window.localStorage.setItem("token", token)
+
+                    if (role == "admin") {
+                        setTimeout(() => {
+                            return window.location.replace('/admin/index')
+                        }, 1200)
+                    }
+                    if (role == "moderator") {
+                        setTimeout(() => {
+                            return window.location.replace('/moderator/index')
+                        }, 1200)
+                    }
+
+                }
+            })
+        }
+    }
+
+
+
+
+</script>

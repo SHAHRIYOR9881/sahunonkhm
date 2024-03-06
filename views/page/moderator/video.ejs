@@ -1,0 +1,175 @@
+<div class="page-title-box">
+    <div class="row align-items-center">
+        <div class="col-sm-6">
+            <h3>Video lavhalar bo'limi</h3>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="/admin/index">Asosiy sahifa</a></li>
+                <li class="breadcrumb-item"><a href="/admin/video">Video lavhalar bo'limi</a></li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+
+<button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal"
+    data-target="#CREATE_MODAL">Yaratish</button>
+
+<div class="col-md-12 row d-flex justify-content-start align-items-center mt-2" id="paginations"></div>
+
+<div class="row mt-3">
+    <div class="col-lg-12">
+        <div class="card m-b-30">
+            <div class="card-body">
+                <div class="table-responsive text-center">
+                    <table class="table table-bordered mb-0">
+                        <thead>
+                            <tr>
+                                <th style="font-size: 14px; width: 5%;">#</th>
+                                <th style="font-size: 14px;">Video manzil</th>
+                                <th style="font-size: 14px; width: 15% ;">Yaratilgan</th>
+                                <th style="font-size: 14px; width: 10% ;">Sozlama</th>
+                            </tr>
+                        </thead>
+                        <tbody class="put_tables">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ma'lumot yaratish uchun modal -->
+<div class="modal fade" id="CREATE_MODAL" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">Yaratish</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <label for="username" class="mt-1">Video lavha manzili</label>
+                <input type="text" class="form-control" id="url" placeholder="Link manzilni kiriting ... ">
+
+                <button type="button" onclick="createData()" class="btn btn-success mt-3 col-md-12">Saqlash</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ma'lumot tahrirlash uchun modal -->
+<div class="modal fade" id="EDIT_MODAL" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">Tahrirlash</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body edit_data"> </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/axios.min.js"></script>
+<script src="/jquery.min.js"></script>
+<script src="/inputmask.js"></script>
+<script src="/notification/message.js"></script>
+<script>
+
+    // Yaratish
+    const headers = { headers: { Authorization: 'Bearer ' + window.localStorage.getItem("token") } }
+
+
+    const createData = () => {
+        const url = document.getElementById("url").value;
+        if (url == "") {
+            danger("Barcha ma'lumotlarni kiriting")
+        }
+        else {
+            const body = { url: url }
+            axios.post('/api/video/create', body, headers)
+                .then((res) => {
+                    success("Videolavha yaratildi")
+                    allDatas()
+                })
+        }
+    }
+
+    // Hamma ma'lumotlarni olish
+    const allDatas = () => {
+        axios.get("/api/video/all").then(async (res) => {
+            const DATA = res.data.data
+            console.log(DATA)
+            const put_table = $(".put_tables");
+            await put_table.html("");
+            if (DATA == "") {
+                put_table.append(``)
+            }
+            else {
+                DATA.forEach((item, index) => {
+                    put_table.append(`
+                        <tr>
+                            <th>${index += 1}</th>
+                            <td>${item.url}</td>
+                            <td>${new Date(item.createdAt).toLocaleDateString()}</td>
+                            <td>
+                                <i onclick="getData('${item._id}')" data-toggle="modal" data-target="#EDIT_MODAL" style="cursor: grab; font-size: 14px; margin-right: 10px;" class=" fas fa-pen-nib text-warning p-2 border border-1 border-warning rounded"></i>
+                                <i onclick="deleteData('${item._id}')" style="cursor: grab;  font-size: 14px;" class="fas fa-trash-alt text-danger p-2 border border-1 border-danger rounded"></i>
+                            </td>
+                        </tr>
+                    `);
+                });
+            }
+        })
+    }
+    allDatas()
+
+    // O'chirish
+    const deleteData = (id) => {
+        axios.delete(`/api/video/${id}`, headers).then((res) => {
+            success("Ma'lumot o'chirildi")
+            allDatas()
+        })
+    }
+
+    // Tahrirlash
+    const getData = (id) => {
+        axios.get(`/api/video/${id}`).then(async (res) => {
+            const data = res.data.data
+            const edit_data = $(".edit_data");
+            await edit_data.html("");
+            edit_data.append(`
+                <label for="url_update" class="mt-1">Moderator ismi</label>
+                <input type="text" class="form-control" id="url_update" value="${data.url}">
+
+                <button type="button" onclick="editData('${data._id}')" class="btn btn-success mt-3 col-md-12">Tahrirlash</button>
+            `);
+            IMask(document.getElementById("telephone_update"), { mask: '998-00-000-00-00' });
+        })
+    }
+    const editData = (id) => {
+        const url = document.getElementById("url_update").value;
+        if (url == "") {
+            danger("Barcha ma'lumotlarni kiriting")
+        }
+        else {
+            const body = { url: url }
+            axios.put(`/api/video/${id}`, body, headers).then((res) => {
+                success("Moderator tahrirlandi")
+                allDatas()
+            })
+        }
+    }
+</script>

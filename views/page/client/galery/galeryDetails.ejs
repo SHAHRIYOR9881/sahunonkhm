@@ -1,0 +1,71 @@
+<section class="page-header">
+    <div class="page-header-bg"
+        style="background-image: url(/client/images/resources/site-footer-img.jpg); background-size: cover;">
+    </div>
+    <div class="container">
+        <div class="page-header__inner">
+            <h1 style="font-size: 50px; color: white;"><%= translation.fotolavhalar  %></h1>
+            <ul class="thm-breadcrumb list-unstyled">
+                <li><a href="/"><%= translation.asosiy_sahifa  %></a></li>
+                <li><span>/</span></li>
+                <li><%= translation.fotolavhalar  %></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="department-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <div class="department-details__left">
+
+                    <div class="department-details__img-and-points-box">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="department-details__img">
+                                    <img src="/client/images/resources/department-details-img-1.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="department-details__points-box">
+                                    <h3 class="department-details__points-box-title text-success" id="NAME"> </h3>
+                                    <p class="department-details__points-box-text text-light" id="DESCRIPTION"> </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script src="/axios.min.js"></script>
+<script src="/jquery.min.js"></script>
+<script>
+
+
+    const lang = window.localStorage.getItem("language");
+    const notFound = `<h1>${lang == "ru" ? "Никакой информации не найдено" : "Hech qanday ma'lumot topilmadi"}</h1>`
+
+
+
+    const getData = () => {
+        const id = String(window.location.pathname).split("/")[3]
+        axios.get(`/api/galery/${id}`).then(async (res) => {
+            const data = res.data.data
+            const NAME = document.getElementById("NAME")
+            const DESCRIPTION = document.getElementById("DESCRIPTION")
+
+            NAME.innerHTML = lang == "ru" ? data.name.ru : data.name.uz
+            DESCRIPTION.innerHTML = lang == "ru" ? data.description.ru : data.description.uz
+
+        })
+    }
+    getData()
+
+
+</script>

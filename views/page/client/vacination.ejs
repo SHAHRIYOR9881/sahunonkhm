@@ -1,0 +1,72 @@
+<section class="page-header">
+    <div class="page-header-bg"
+        style="background-image: url(/client/images/resources/site-footer-img.jpg); background-size: cover;">
+    </div>
+    <div class="container">
+        <div class="page-header__inner">
+            <h1 style="font-size: 50px; color: white;">
+                <%= translation.vaksinatsiya %>
+            </h1>
+            <ul class="thm-breadcrumb list-unstyled">
+                <li><a href="/">
+                        <%= translation.asosiy_sahifa %>
+                    </a></li>
+                <li><span>/</span></li>
+                <li>
+                    <%= translation.vaksinatsiya %>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<div class="row mt-5 mb-5">
+    <div class="col-md-10 offset-1 text-light">
+
+        <div class="faq-one__right">
+            <div class="accrodion-grp datas_all" data-grp-name="faq-one-accrodion">
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="/axios.min.js"></script>
+<script src="/jquery.min.js"></script>
+<script>
+
+
+    const lang = window.localStorage.getItem("language");
+    const notFound = `<h1>${lang == "ru" ? "Никакой информации не найдено" : "Hech qanday ma'lumot topilmadi"}</h1>`
+
+
+
+    const getData = () => {
+        axios.get("/api/vactination/all").then(async (res) => {
+            const data = res.data.data
+            const datas_all = $(".datas_all");
+            await datas_all.html("");
+            data.forEach((item, index) => {
+                datas_all.append(`
+                    <div class="accrodion ">
+                        <div class="accrodion-title">
+                            <h2 class="text-light">${lang == "ru" ? item.name.ru : item.name.uz}</h2>
+                        </div>
+                        <div class="accrodion-content">
+                            <div class="inner">
+                                <p  class="text-light" >
+                                    ${lang == "ru" ? item.description.ru : item.description.uz}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `)
+            });
+        })
+    }
+    getData()
+</script>

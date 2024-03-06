@@ -1,0 +1,92 @@
+<!-- Rahbariyat -->
+<section class="page-header">
+    <div class="page-header-bg"
+        style="background-image: url(/client/images/resources/site-footer-img.jpg); background-size: cover;">
+    </div>
+    <div class="container">
+        <div class="page-header__inner">
+            <h1 style="font-size: 50px; color: white;">
+                <%= translation.xududiy_bolinma_rahbari %>
+            </h1>
+            <ul class="thm-breadcrumb list-unstyled">
+                <li><a href="/">
+                        <%= translation.asosiy_sahifa %>
+                    </a></li>
+                <li><span>/</span></li>
+                <li>
+                    <%= translation.xududiy_bolinma_rahbari %>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+<section class="our-history">
+    <div class="container">
+        <div class="our-history__inner getDatas">
+        </div>
+    </div>
+</section>
+<script src="/axios.min.js"></script>
+<script src="/jquery.min.js"></script>
+<script>
+
+    const lang = window.localStorage.getItem("language");
+    const notFound = `<h1>${lang == "ru" ? "Никакой информации не найдено" : "Hech qanday ma'lumot topilmadi"}</h1>`
+
+
+    const getData = () => {
+        axios.get("/api/staff/filter", { params: { status: "3" } }).then(async (res) => {
+            const data = res.data.data
+            const getDatas = $(".getDatas");
+            await getDatas.html("");
+            if (data == "") {
+                getDatas.append(notFound)
+            }
+            else {
+                data.forEach((item, index) => {
+                    getDatas.append(`
+                        <div class="our-history__single">
+                            <div class="our-history__main-content-box">
+                                <div class="our-history__main-content-single">
+                                    <ul class="row list-unstyled">
+                                        <li class="col-xl-6 col-lg-6">
+                                            <div class="our-history__img-box">
+                                                <div  style="transform: rotate(0deg);" class="our-history__img">
+                                                    <img src="/uploads/${item.image[0]}" alt="">
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-xl-6 col-lg-6">
+                                            <div class="our-history__content-one">
+                                                <div class="our-history__content-one-title-box">
+                                                    <div class="our-history__content-one-circle-one">
+                                                        <div class="our-history__content-one-circle-two">
+                                                            <div class="our-history__content-one-circle-three"></div>
+                                                        </div>
+                                                    </div>
+                                                    <h3 class="our-history__content-one-title text-light">${lang == "ru" ? item.name.ru : item.name.uz} 11</h3>
+                                                </div>
+                                                <div class="our-history__content-one-text-box">
+                                                    <p class="mt-2"><span style="width: 150px;" class="badge bg-success p-1 fs-6"><%= translation.rahbar_haqida  %> </span> ${lang == "ru" ? item.description.ru : item.description.uz} </p>
+                                                    <p class="mt-2"><span style="width: 150px;" class="badge bg-success p-1 fs-6"><%= translation.qabul_kunlari  %> </span> ${lang == "ru" ? item.reception_days.ru : item.reception_days.uz} </p>
+                                                    <p class="mt-2"><span style="width: 150px;" class="badge bg-success p-1 fs-6"><%= translation.lavozimi  %> </span> ${lang == "ru" ? item.position.ru : item.position.uz} </p>
+                                                    <p class="mt-2"><span style="width: 150px;" class="badge bg-success p-1 fs-6"><%= translation.qabul_soati  %>  </span> ${item.reception_hours} </p>
+                                                    <p class="mt-2"><span style="width: 150px;" class="badge bg-success p-1 fs-6"><%= translation.telefon_raqam  %> </span> ${item.phone} </p>
+                                                    <p class="mt-2"><span style="width: 150px;" class="badge bg-success p-1 fs-6"><%= translation.pochta_manzili  %> </span> ${item.email} </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    `)
+                });
+            }
+
+        })
+    }
+    getData()
+</script>

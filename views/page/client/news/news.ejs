@@ -1,0 +1,68 @@
+<!--Page Header Start-->
+<section class="page-header">
+    <div class="page-header-bg"
+        style="background-image: url(/client/images/resources/site-footer-img.jpg); background-size: cover;">
+    </div>
+    <div class="container">
+        <div class="page-header__inner">
+            <h1 style="font-size: 50px; color: white;"><%= translation.songi_yangiliklar  %> </h1>
+            <ul class="thm-breadcrumb list-unstyled">
+                <li><a href="/"><%= translation.asosiy_sahifa  %></a></li>
+                <li><span>/</span></li>
+                <li><%= translation.songi_yangiliklar  %></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+<section class="news-page">
+    <div class="container">
+        <div class="row news">
+        </div>
+    </div>
+</section>
+
+<script src="/axios.min.js"></script>
+<script src="/jquery.min.js"></script>
+<script>
+
+
+    const lang = window.localStorage.getItem("language");
+    const notFound = `<h1>${lang == "ru" ? "Никакой информации не найдено" : "Hech qanday ma'lumot topilmadi"}</h1>`
+
+
+    const getData = () => {
+        axios.get("/api/news/all").then(async (res) => {
+            const NEWS = res.data.data;
+            const news = $(".news")
+            await news.html("")
+            if (NEWS == []) {
+                news.append(notFound)
+            }
+            else {
+                NEWS.forEach((item) => {
+                    news.append(`
+                        <div class="col-xl-4 col-lg-4 wow fadeInUp" data-wow-delay="100ms">
+                            <div class="news-one__single">
+                                <div class="news-one__img-box">
+                                    <div class="news-one__img">
+                                        <img src="/uploads/${item.image[0]}" alt="">
+                                    </div>
+                                </div>
+                                <div class="news-one__content">
+                                    <h3 class="news-one__title"><a href="/news/details/${item._id}">${ lang == "ru" ? String(item.title.ru).slice(0, 50) : String(item.title.uz).slice(0, 50)} ...</a>
+                                    </h3>
+                                    <div class="news-one__btn">
+                                        <a href="/news/details/${item._id}" > <%= translation.batafsil %> <i class="icon-right-arrow"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `)
+                });
+            }
+        })
+    }
+    getData()
+</script>

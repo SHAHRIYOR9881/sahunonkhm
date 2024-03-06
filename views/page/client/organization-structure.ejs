@@ -1,0 +1,52 @@
+<!-- Tashkiliy tuzilma -->
+<section class="page-header">
+    <div class="page-header-bg"
+        style="background-image: url(/client/images/resources/site-footer-img.jpg); background-size: cover;">
+    </div>
+    <div class="container">
+        <div class="page-header__inner">
+            <h1 style="font-size: 50px; color: white;"><%= translation.tashkiliy_tuzilma  %></h1>
+            <ul class="thm-breadcrumb list-unstyled">
+                <li><a href="/"><%= translation.asosiy_sahifa  %></a></li>
+                <li><span>/</span></li>
+                <li><%= translation.tashkiliy_tuzilma  %></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="portfolio-page">
+    <div class="container">
+        <div class="row galeries">
+
+        </div>
+    </div>
+</section>
+<script src="/axios.min.js"></script>
+<script src="/jquery.min.js"></script>
+<script>
+
+    const getData = () => {
+        axios.get("/api/organization_structure/all").then(async (res) => {
+            const data = res.data.data
+            const galeries = $(".galeries");
+            await galeries.html("");
+            data.forEach((item) => {
+                galeries.append(`
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="portfolio-page__single">
+                            <div class="portfolio-page__img-box">
+                                <div class="portfolio-page__img">
+                                    <img src="/uploads/${item.image[0]}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `)
+            });
+        })
+    }
+    getData()
+
+
+</script>

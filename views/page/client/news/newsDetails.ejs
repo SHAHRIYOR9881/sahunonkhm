@@ -1,0 +1,50 @@
+<section class="news-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-7">
+                <div class="news-details__left">
+                    <div class="news-details__img-box">
+                        <div class="news-details__img">
+                            <img id="newsImage" src="" alt="">
+                        </div>
+                    </div>
+                    <div class="news-details__content">
+                        <h3 class="news-details__title-1 text-light" id="newsTitle"></h3>
+                        <p class="news-details__text-1 mt-3" id="newsDescription"></p>
+                        <p class="news-details__text-1 mt-3" id="newsAuthor"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="/axios.min.js"></script>
+<script src="/jquery.min.js"></script>
+<script>
+
+    const lang = window.localStorage.getItem("language");
+    const notFound = `<h1>${lang == "ru" ? "Никакой информации не найдено" : "Hech qanday ma'lumot topilmadi"}</h1>`
+
+
+
+
+    const getData = () => {
+        const id = String(window.location.pathname).split("/")[3]
+        axios.get(`/api/news/${id}`).then(async (res) => {
+            const data = res.data.data;
+
+            const newsImage = document.getElementById("newsImage")
+            const newsTitle = document.getElementById("newsTitle")
+            const newsDescription = document.getElementById("newsDescription")
+            const newsAuthor = document.getElementById("newsAuthor")
+
+            newsImage.src = `/uploads/${data.image[0]}`
+            newsTitle.innerHTML = lang == "ru" ? data.title.ru : data.title.uz
+            newsDescription.innerHTML = lang == "ru" ? data.description.ru : data.description.uz
+            newsAuthor.innerHTML = `<p class="mt-2"> <span style="width: 100px;" class="badge bg-success p-1 fs-6"> <%= translation.muallif %> </span> ${lang == "ru" ? data.author.ru : data.author.uz}</p> `
+        })
+    }
+    getData()
+</script>

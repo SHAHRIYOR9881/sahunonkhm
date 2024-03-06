@@ -1,0 +1,14 @@
+<section class="events-page mt-1">
+    <div class="container ">
+        <div class="row">
+            <h1 id="change" style="color: white;"></h1>
+        </div>
+    </div>
+</section>
+
+<script>
+    const lang = window.localStorage.getItem("language");
+    const notFound = `${lang == "ru" ? "Никакой информации не найдено" : "Hech qanday ma'lumot topilmadi"}`
+
+    document.getElementById("change").innerHTML = notFound
+</script>

@@ -1,0 +1,158 @@
+<header class="main-header">
+    <nav class="main-menu">
+        <div class="main-menu__wrapper">
+            <div class="main-menu__wrapper-inner">
+                <a href="/" class="main-menu__logo" style="width: 6%; height: 100%;  transform: scale(1);">
+                    <img src="/main-logo.png" style=" margin: 25% 50%; width: 80px;" alt="">
+                </a>
+
+                <div class="main-menu__top">
+                    <div class="main-menu__top-inner">
+                        <div class="main-menu__top-left">
+                            <div class="main-menu__social">
+                                <a href="#"><i class="fab fa-facebook"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-telegram"></i></a>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                        <div class="main-menu__top-right">
+                            <ul class="list-unstyled main-menu__top-menu">
+                                <li><a href="tel:998672264926">+998672264926</a></li>
+                            </ul>
+                            <ul class="list-unstyled main-menu__top-menu">
+                                <li><a style="color: white;" onclick="setLanguage('uz')" href="/?clang=uz">Uz</a></li>
+                                <li><a style="color: white;" onclick="setLanguage('ru')" href="/?clang=ru">Ru</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-menu__bottom">
+                    <div class="main-menu__bottom-inner">
+                        <div class="main-menu__main-menu-box">
+                            <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
+                            <ul class="main-menu__list">
+
+                                <li class="dropdown">
+                                    <a class="menu_text" href="#">
+                                        <%= translation.tashkilot_haqida %>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a class="menu_text" href="/news">
+                                                <%= translation.yangiliklar %>
+                                            </a></li>
+                                        <li><a class="menu_text" href="/guidance">
+                                                <%= translation.rahbariyat %>
+                                            </a></li>
+                                        <li><a class="menu_text" href="/staff">
+                                                <%= translation.hodimlar %>
+                                            </a></li>
+                                        <li><a class="menu_text" href="/organization-structure">
+                                                <%= translation.tashkiliy_tuzilma %>
+                                            </a></li>
+                                        <li><a class="menu_text" href="/project">
+                                                <%= translation.loyihalar %>
+                                            </a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a class="menu_text" href="#">
+                                        <%= translation.hujjatlar %>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a class="menu_text" href="/document/uzbekistan-laws">
+                                                <%= translation.ozbekiston_qonunlari %>
+                                            </a></li>
+                                        <li><a class="menu_text" href="/document/president-laws">
+                                                <%= translation.prezident_qonunlari %>
+                                            </a></li>
+                                        <li><a class="menu_text" href="/document/ministry-laws">
+                                                <%= translation.vazirlar_mahkamasi_qonunlari %>
+                                            </a>
+                                        </li>
+                                        <li><a class="menu_text" href="/document/organization-laws">
+                                                <%= translation.tashkilot_hujjatlari %>
+                                            </a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="menu_text" href="#">
+                                        <%= translation.matbuot_xizmati %>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a class="menu_text" href="/about-us">
+                                                <%= translation.umumiy_malumot %>
+                                            </a></li>
+                                        <li><a class="menu_text" href="/galery">
+                                                <%= translation.fotolavhalar %>
+                                            </a></li>
+                                        <li><a class="menu_text" href="/video">
+                                                <%= translation.videolavhalar %>
+                                            </a></li>
+                                        <li><a class="menu_text" href="/contact">
+                                                <%= translation.matbuot_boglanish %>
+                                            </a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#">
+                                        <%= translation.muassalar %>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="/regional-border">
+                                                <%= translation.xududiy_bolinma %>
+                                            </a></li>
+                                        <li><a href="/regional-border-director">
+                                                <%= translation.xududiy_bolinma_rahbari %>
+                                            </a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="menu_text" href="/">
+                                        <%= translation.interaktiv_xizmatlar %>
+                                    </a>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="menu_text" href="/vacination">
+                                        <%= translation.vaksinatsiya %>
+                                    </a>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="menu_text" href="/covid">
+                                        <%= translation.covid %>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="main-menu__right">
+                            <div class="main-menu__call">
+                                <div class="main-menu__call-icon">
+                                    <span class="icon-telephone"></span>
+                                </div>
+                                <div class="main-menu__call-content">
+                                    <p class="main-menu__call-sub-title">
+                                        <%= translation.telefon %>
+                                    </p>
+                                    <h5 class="main-menu__call-number"><a href="tel:998672264926">+998672264926</a></h5>
+                                </div>
+                            </div>
+                            <!-- <div class="main-menu__search-box">
+                                <a href="#" class="main-menu__search search-toggler icon-magnifying-glass"></a>
+                            </div> -->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    const setLanguage = (lang) => {
+        return window.localStorage.setItem("language", lang)
+    }
+</script>

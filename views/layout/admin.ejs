@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>
+        <%= title %>
+    </title>
+    <meta content="Sanitariya-epidemologik osoyishtalik va jamoat salomatligi xizmatining Sirdaryo viloyati boshqarmasi" name="description" />
+    <meta content="Sanitariya-epidemologik markazi" name="author" />
+
+    <link rel="shortcut icon" href="/main-logo.png" type="image/x-icon">
+
+    <link href="/admin/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/admin/css/metismenu.min.css" rel="stylesheet" type="text/css">
+    <link href="/admin/css/icons.css" rel="stylesheet" type="text/css">
+
+    <link href="/notification/toastr.css" rel="stylesheet" type="text/css">
+    <link href="/notification/toastr.min.css" rel="stylesheet" type="text/css">
+    <link href="/admin/css/style.css" rel="stylesheet" type="text/css">
+    
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <div class="topbar">
+
+            <div class="topbar-left">
+                <a href="/admin/index" class="logo">
+                    <span class="logo-light">
+                        <img src="/main-logo.png" style="width: 22%;" alt=""> Admin
+                    </span>
+                    <span class="logo-sm">
+                        <img src="/main-logo.png" style="width: 80%;" alt="">
+                    </span>
+                </a>
+            </div>
+
+            <nav class="navbar-custom">
+                <ul class="list-inline menu-left mb-0">
+                    <li class="float-left">
+                        <button class="button-menu-mobile open-left waves-effect">
+                            <i class="mdi mdi-menu"></i>
+                        </button>
+                    </li>
+                    <li class="float-right">
+                        <button onclick="SignOut()" class="waves-effect btn btn-danger col-md-12 mt-3">
+                            <i class="fas fa-power-off text-light"></i> <span> Chiqish </span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+        <div class="left side-menu">
+            <div class="slimscroll-menu" id="remove-scroll">
+                <div id="sidebar-menu">
+                    <ul class="metismenu" id="side-menu">
+                        <li class="menu-title">Menu</li>
+                        <li>
+                            <a href="/admin/index" class="waves-effect  text-light">
+                                <i class="fas fa-layer-group"></i> <span> Asosiy sahifa </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/admin/galery" class="waves-effect   text-light ">
+                                <i class="fas fa-layer-group"></i> <span> Foto lavhalar </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/video" class="waves-effect  text-light">
+                                <i class="fas fa-layer-group"></i> <span> Video lavhalar </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/news" class="waves-effect  text-light">
+                                <i class="fas fa-layer-group"></i> <span>Yangiliklar</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/organization-structure" class="waves-effect   text-light">
+                                <i class="fas fa-layer-group"></i> <span> Tashkiliy tuzilma </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/project" class="waves-effect  text-light">
+                                <i class="fas fa-layer-group"></i> <span> Loyihalar </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/regional-border" class="waves-effect  text-light">
+                                <i class="fas fa-layer-group"></i> <span> Hududiy bo'linmalar </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/staff" class="waves-effect  text-light">
+                                <i class="fas fa-layer-group"></i> <span> Ishchilar </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/user" class="waves-effect  text-light">
+                                <i class="fas fa-layer-group"></i> <span> Moderator </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/vactination" class="waves-effect  text-light">
+                                <i class="fas fa-layer-group"></i> <span> Vaksinatsiya </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/contact" class="waves-effect  text-light">
+                                <i class="fas fa-layer-group"></i> <span> Kontaktlar </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/profile" class="waves-effect   text-warning">
+                                <i class="fas fa-user"></i> <span> Mening profilim </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="content-page">
+            <div class="content">
+                <div class="container-fluid">
+                    <%- body %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/axios.min.js"></script>
+    <!-- Default JS -->
+    <script src="/admin/js/jquery.min.js"></script>
+    <script src="/admin/js/bootstrap.bundle.min.js"></script>
+    <script src="/admin/js/metismenu.min.js"></script>
+    <script src="/admin/js/jquery.slimscroll.js"></script>
+    <script src="/admin/js/waves.min.js"></script>
+    <!-- Toastr JS -->
+    <script src="/notification/toastr.min.js"></script>
+    <script src="/admin/js/app.js"></script>
+    <script>
+        const SignOut = () => {
+            axios.get("/api/user/destroy_session").then((res) => {
+                window.localStorage.removeItem("token")
+                window.location.replace("/login")
+            })
+        }
+    </script>
+</body>
+
+</html>

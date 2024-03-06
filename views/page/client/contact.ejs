@@ -1,0 +1,67 @@
+<section class="page-header">
+    <div class="page-header-bg"
+        style="background-image: url(/client/images/resources/site-footer-img.jpg); background-size: cover;">
+    </div>
+    <div class="container">
+        <div class="page-header__inner">
+            <h1 style="font-size: 50px; color: white;">
+                <%= translation.matbuot_boglanish %>
+            </h1>
+            <ul class="thm-breadcrumb list-unstyled">
+                <li><a href="/">
+                        <%= translation.asosiy_sahifa %>
+                    </a></li>
+                <li><span>/</span></li>
+                <li>
+                    <%= translation.matbuot_boglanish %>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="row ">
+    <div class="col-md-10 row contact offset-1">
+        <table class="table table-bordered text-light text-center mt-5 mb-5">
+            <thead>
+                <tr>
+                    <th style="font-weight: 700;">ID</th>
+                    <th style="font-weight: 700;">F.I.O</th>
+                    <th style="font-weight: 700;">Lavozimi</th>
+                    <th style="font-weight: 700;">Qabul kunlari</th>
+                    <th style="font-weight: 700;">Telefon raqam</th>
+                </tr>
+            </thead>
+            <tbody class="telephones">
+            </tbody>
+        </table>
+    </div>
+</section>
+<script src="/axios.min.js"></script>
+<script src="/jquery.min.js"></script>
+<script>
+
+    const lang = window.localStorage.getItem("language");
+    const notFound = `<h1>${lang == "ru" ? "Никакой информации не найдено" : "Hech qanday ma'lumot topilmadi"}</h1>`
+
+    const getData = () => {
+        axios.get("/api/contact/all").then(async (res) => {
+            const data = res.data.data
+            const telephones = $(".telephones");
+            await telephones.html("");
+            data.forEach((item, index) => {
+                telephones.append(`
+                    <tr>
+                        <td>${index += 1}</td>
+                        <td>${lang == "ru" ? item.name.ru : item.name.uz}</td>
+                        <td>${lang == "ru" ? item.position.ru : item.position.uz}</td>
+                        <td>${lang == "ru" ? item.reception.ru : item.reception.uz}</td>
+                        <td>${item.phone}</td>
+                    </tr>
+                `)
+            });
+
+        })
+    }
+    getData()
+</script>

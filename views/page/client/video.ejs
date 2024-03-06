@@ -1,0 +1,64 @@
+<section class="page-header">
+    <div class="page-header-bg"
+        style="background-image: url(/client/images/resources/site-footer-img.jpg); background-size: cover;">
+    </div>
+    <div class="container">
+        <div class="page-header__inner">
+            <h1 style="font-size: 50px; color: white;"><%= translation.videolavhalar  %></h1>
+            <ul class="thm-breadcrumb list-unstyled">
+                <li><a href="/"><%= translation.asosiy_sahifa  %></a></li>
+                <li><span>/</span></li>
+                <li><%= translation.videolavhalar  %></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="row ">
+    <div class="col-md-10 row videoss offset-1">
+    </div>
+</section>
+
+
+
+
+<script src="/axios.min.js"></script>
+<script src="/jquery.min.js"></script>
+<script>
+
+    const getData = () => {
+        axios.get("/api/video/all").then(async (res) => {
+            const data = res.data.data
+            const videoss = $(".videoss");
+            await videoss.html("");
+            data.forEach((item) => {
+                videoss.append(`
+                    <div class="item col-md-3 mt-5" style="overflow: hidden;">
+                        <div class="portfolio-one__single">
+                            <div class="portfolio-one__img-box">
+                                <div class="portfolio-one__img">
+                                    <img src="/client/images/services/1.jpg" alt="">
+                                </div>
+                                <div class="portfolio-one__content"
+                                    style=" width: 100%; height: 100%; display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                    <a href="${item.url}" target="_blank"  style="width: 50%; height: 50%; margin-top: 70px ; display: flex; flex-direction: row; align-items: center; justify-content: center;"  >
+                                        <div class="video-one__video-icon">
+                                            <span class="fa fa-play"></span>
+                                            <i class="ripple"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `)
+            });
+
+        })
+    }
+    getData()
+
+
+</script>

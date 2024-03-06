@@ -1,0 +1,285 @@
+<div class="page-title-box">
+    <div class="row align-items-center">
+        <div class="col-sm-6">
+            <h3>Kontakt bo'limi</h3>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="/admin/index">Asosiy sahifa</a></li>
+                <li class="breadcrumb-item"><a href="/admin/contact">Kontakt bo'limi</a></li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+
+<button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal"
+    data-target="#CREATE_MODAL">Yaratish</button>
+
+<div class="col-md-12 row d-flex justify-content-start align-items-center mt-2" id="paginations"></div>
+
+<div class="row mt-3">
+    <div class="col-lg-12">
+        <div class="card m-b-30">
+            <div class="card-body">
+                <div class="table-responsive text-center">
+                    <table class="table table-bordered mb-0">
+                        <thead>
+                            <tr>
+                                <th style="font-size: 14px; width: 5%;">#</th>
+                                <th style="font-size: 14px;">F.I.O</th>
+                                <th style="font-size: 14px;">Lavozimi</th>
+                                <th style="font-size: 14px; width: 10% ;">Yaratilgan</th>
+                                <th style="font-size: 14px; width: 13% ;">Sozlama</th>
+                            </tr>
+                        </thead>
+                        <tbody class="put_tables">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Ma'lumot yaratish uchun modal -->
+<div class="modal fade" id="CREATE_MODAL" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">Kontaktni yaratish</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <label class="mt-3">F.I.O (o'zbek tilida)</label>
+                <input type="text" class="form-control" id="nameuz">
+
+                <label class="mt-3">F.I.O (rus tilida)</label>
+                <input type="text" class="form-control" id="nameru">
+
+                <hr style="border: 2px solid white;">
+
+                <label class="mt-3">Lavozimi (o'zbek tilida)</label>
+                <input type="text" class="form-control" id="positionuz">
+
+                <label class="mt-3">Lavozimi (rus tilida)</label>
+                <input type="text" class="form-control" id="positionru">
+
+
+                <hr style="border: 2px solid white;">
+
+                <label class="mt-3">Qabul kunlari (o'zbek tilida)</label>
+                <input type="text" class="form-control" id="receptionuz">
+
+                <label class="mt-3">Qabul kunlari (rus tilida)</label>
+                <input type="text" class="form-control" id="receptionru">
+
+
+                <hr style="border: 2px solid white;">
+
+                <label class="mt-3">Telefon raqam</label>
+                <input type="text" class="form-control" id="phone">
+
+                <button type="button" onclick="createData()" class="btn btn-success mt-3 col-md-12">Saqlash</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ma'lumot tahrirlash uchun modal -->
+<div class="modal fade" id="EDIT_MODAL" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">Kontaktni tahrirlash</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body edit_data"> </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/axios.min.js"></script>
+<script src="/jquery.min.js"></script>
+<script src="/inputmask.js"></script>
+<script src="/notification/message.js"></script>
+<script>
+
+    const headers = { headers: { Authorization: 'Bearer ' + window.localStorage.getItem("token") } }
+
+    // Yaratish
+    const createData = () => {
+
+        const name_uz = document.getElementById("nameuz").value;
+        const name_ru = document.getElementById("nameru").value;
+        const position_uz = document.getElementById("positionuz").value;
+        const position_ru = document.getElementById("positionru").value;
+        const reception_uz = document.getElementById("receptionuz").value;
+        const reception_ru = document.getElementById("receptionru").value;
+        const phone = document.getElementById("phone").value;
+
+        if (
+            name_uz == "" ||
+            name_ru == "" ||
+            position_uz == "" ||
+            position_ru == "" ||
+            reception_uz == "" ||
+            reception_ru == "" ||
+            phone == ""
+        ) {
+            danger("Barcha ma'lumotlarni kiriting")
+        }
+        else {
+            const body = {
+                nameuz: name_uz,
+                nameru: name_ru,
+                positionuz: position_uz,
+                positionru: position_ru,
+                receptionuz: reception_uz,
+                receptionru: reception_ru,
+                phone: phone
+            }
+            axios.post('/api/contact/create', body, headers)
+                .then((res) => {
+                    const status = res.data.status
+                    if (status == false) {
+                        warning("Kontakt yaratilmadi")
+                    }
+                    else {
+                        success("Kontakt yaratildi")
+                        allDatas()
+                    }
+                })
+        }
+    }
+
+    // Hamma ma'lumotlarni olish
+    const allDatas = () => {
+        axios.get("/api/contact/all").then(async (res) => {
+            const DATA = res.data.data
+            const put_table = $(".put_tables");
+            await put_table.html("");
+            if (DATA == "") {
+                put_table.append(``)
+            }
+            else {
+                DATA.forEach((item, index) => {
+                    put_table.append(`
+                        <tr>
+                            <th>${index += 1}</th>
+                            <td> ${item.name.uz}</td>
+                            <td>${item.position.uz}</td>
+                            <td>${new Date(item.createdAt).toLocaleDateString()}</td>
+                            <td>
+                                <i onclick="getContext('${item._id}')" data-toggle="modal" data-target="#EDIT_MODAL" style="cursor: grab; font-size: 14px; margin-right: 10px;" class=" fas fa-pen-nib text-warning p-2 border border-1 border-warning rounded"></i>
+                                <i onclick="deleteData('${item._id}')" style="cursor: grab;  font-size: 14px;" class="fas fa-trash-alt text-danger p-2 border border-1 border-danger rounded"></i>
+                            </td>
+                        </tr>
+                    `);
+                });
+            }
+        })
+    }
+    allDatas()
+
+    // O'chirish
+    const deleteData = (id) => {
+        const headers = { headers: { Authorization: 'Bearer ' + window.localStorage.getItem("token") } }
+        axios.delete(`/api/contact/${id}`, headers).then((res) => {
+            success("Ma'lumot o'chirildi")
+            allDatas()
+        })
+    }
+
+    // Matnli qismi tahrirlash
+    const getContext = (id) => {
+        axios.get(`/api/contact/${id}`).then(async (res) => {
+            const data = res.data.data
+            const edit_data = $(".edit_data");
+            await edit_data.html("");
+            edit_data.append(`
+                <label class="mt-3">F.I.O (o'zbek tilida)</label>
+                <input type="text" class="form-control" value="${data.name.uz}" id="nameuz_update">
+                <label class="mt-3">F.I.O (rus tilida)</label>
+                <input type="text" class="form-control" value="${data.name.ru}"  id="nameru_update">
+
+                <hr style="border: 2px solid white;">
+
+                <label class="mt-3">Lavozimi (o'zbek tilida)</label>
+                <input type="text" class="form-control" value="${data.position.uz}"  id="positionuz_update">
+                <label class="mt-3">Lavozimi (rus tilida)</label>
+                <input type="text" class="form-control" value="${data.position.ru}"  id="positionru_update">
+
+                <hr style="border: 2px solid white;">
+
+                <label class="mt-3">Qabul kunlari (o'zbek tilida)</label>
+                <input type="text" class="form-control" value="${data.reception.uz}"  id="receptionuz_update">
+                <label class="mt-3">Qabul kunlari (rus tilida)</label>
+                <input type="text" class="form-control" value="${data.reception.ru}"  id="receptionru_update">
+
+                <hr style="border: 2px solid white;">
+
+                <label class="mt-3">Telefon raqam</label>
+                <input type="text" class="form-control" value="${data.phone}"  id="phone_update">
+
+                <button type="button" onclick="editContext('${data._id}')" class="btn btn-success mt-3 col-md-12">Tahrirlash</button>
+            `);
+        })
+    }
+    const editContext = (id) => {
+        const nameuz = document.getElementById("nameuz_update").value;
+        const nameru = document.getElementById("nameru_update").value;
+        const positionuz = document.getElementById("positionuz_update").value;
+        const positionru = document.getElementById("positionru_update").value;
+        const receptionuz = document.getElementById("receptionuz_update").value;
+        const receptionru = document.getElementById("receptionru_update").value;
+        const phone = document.getElementById("phone_update").value;
+
+        if (
+            nameuz == "" ||
+            nameru == "" ||
+            positionuz == "" ||
+            positionru == "" ||
+            receptionuz == "" ||
+            receptionru == "" ||
+            phone == ""
+        ) {
+            danger("Barcha ma'lumotlarni kiriting")
+        }
+        else {
+            const body = {
+                name: {
+                    uz: nameuz,
+                    ru: nameru,
+                },
+                position: {
+                    uz: positionuz,
+                    ru: positionru,
+                },
+                reception: {
+                    uz: receptionuz,
+                    ru: receptionru,
+                },
+                phone: phone
+            }
+            axios.put(`/api/contact/${id}`, body, headers).then((res) => {
+                success("Kontakt tahrirlandi")
+                allDatas()
+            })
+        }
+    }
+
+
+</script>
