@@ -26,7 +26,7 @@ DNS names: ns1.eskiz.uz | ns2.eskiz.uz
 2. echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
 3. sudo apt update
 4. sudo apt install mongodb-org
-5.sudo systemctl start mongod.service
+5. sudo systemctl start mongod.service
 ---------------------------  Database statusini tekshirish  --------------------------------
 sudo systemctl status mongod
 ---------------------------  Database ni o'chirish (1-usul)  --------------------------------
@@ -46,7 +46,7 @@ sudo apt install mc
 ---------------------------  Serverda keraksiz papkalarni o'chirish  --------------------------------
 sudo rm -r -f <folder or filename> 
 ---------------------------  serverda  papkalarni yaratish  --------------------------------
-sudo mkdir <folder or filename>   
+sudo mkdir <folder or filename>    
 ```
 
 ### Set up - NGINX
@@ -56,9 +56,9 @@ sudo apt install nginx
 nano /etc/nginx/sites-available/default
 server {
     root /var/www/html;
-    server_name 95.130.227.53;
+    server_name 95.130.227.53 sayhunobodtuman1sonkhm.uz www.sayhunobodtuman1sonkhm.uz;
     location / {
-    proxy_pass http://localhost:3000; #whatever port your app runs on
+    proxy_pass http://localhost:5000; #whatever port your app runs on
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -68,8 +68,9 @@ server {
 }
 
 ---------------------------  NGINX da fayl yuklanish hajmini sozlash  --------------------------------
+nano /etc/nginx/nginx.conf
 server {
-    client_max_body_size 8M;
+    client_max_body_size 100M;
 }
 ---------------------------  NGINX ni saqlash  --------------------------------
 Press "CTRL + X" 
@@ -87,29 +88,35 @@ sudo systemctl status nginx
 ```
 sudo apt update
 sudo apt install git
-cd ../home/ <project folder>
+cd ../home
+git clone https://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:x-oauth-basic@github.com/SHAHRIYOR9881/sahunonkhm.git
+cd ../home/sahunonkhm
+npm install
 ```
 
 ### PM2
 ```
-cd ../home/ <project folder>
-git clone https://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:x-oauth-basic@github.com/SHAHRIYOR9881/sanitariya-backend.git
-cd sanitariya-backend
+git clone https://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:x-oauth-basic@github.com/SHAHRIYOR9881/sahunonkhm.git
+cd ../home/sahunonkhm
 npm install
-```
-### PM2
-```
+---------------------------  pm2 ni sozlash  --------------------------------
 npm install -g pm2
 npm i pm2
 pm2 start app.js
 pm2 startup
 pm2 save
-pm2 monit
+---------------------------  serverda loyihani ishlashini bekor qilish  --------------------------------
+pm2 delete all
+pm2 delete id
+---------------------------  ishlayotgan loyihalarni ro'yhatini olish  --------------------------------
 pm2 list
-pm2 delete [all/id]
+---------------------------  serverni qayta ishga tushirish  --------------------------------
 pm2 reload all
+pm2 reload id
+---------------------------  serverda  monitoring qilish  --------------------------------
 pm2 monit
 ```
+
 ### SSL
 ```
 sudo apt update
@@ -127,93 +134,16 @@ sudo certbot --nginx
 
 ```
 
--------------------------------------------------------------------------------------------------------
-### Admin register   -    https://sirepid.uz/
+### Admin 
 ```
 POST - http://localhost:5000/api/user/create
-POST - http://95.130.227.111/api/user/create
+POST - http://95.130.227.53/api/user/create
 {   
     "name": "Admin",   
-    "phone": "998-90-111-22-33", 
-    "password": "123",   
+    "phone": "998-90-129-98-81", 
+    "password": "124536798sayjunkhm",   
     "role": "admin"  
 }
-```
-### Github Deployement
-```
-git init
-git add .
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://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:x-oauth-basic@github.com/SHAHRIYOR9881/sanitariya-backend.git
-git push -u origin main
-```
-### Clone qilish
-```
-git clone https://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:x-oauth-basic@github.com/SHAHRIYOR9881/sanitariya-backend.git
-cd sanitariya-backend
-npm install
-npm start
-```
-### Pull qilish
-```
-git pull https://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:x-oauth-basic@github.com/SHAHRIYOR9881/sanitariya-backend.git
-```
-### Push qilish
-```
-git add .
-git commit -m "start"
-git push https://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:x-oauth-basic@github.com/SHAHRIYOR9881/sanitariya-backend.git
-```
-### Asosiy sahifa uchun
-```
-GET - /api/client/index - CLIENT taraf uchun asosiy sahifaga 
-```
-### Foydalanuvchilar
-```
-GET - /api/user/all - hammasini olish
-GET - /api/user/:id - :id boyicha alohida olish
-```
-### Xodimlar va rahbariyat
-```
-GET - /api/staff/all - hammasini olish
-GET - /api/staff/filter - hammasini olish  | {params: { status: "" } }
-GET - /api/staff/:id - :id boyicha alohida olish
-```
-### Yangiliklar
-```
-GET - /api/news/all - hammasini olish
-GET - /api/news/:id - :id boyicha alohida olish
-```
-### Fotolavhalar
-```
-GET - /api/galery/all - hammasini olish
-GET - /api/galery/:id - :id boyicha alohida olish
-```
-### Loyihalar
-```
-GET - /api/project/all - hammasini olish
-GET - /api/project/:id - :id boyicha alohida olish
-```
-### Tashkiliy tuzilma
-```
-GET - /api/organization_structure/all - hammasini olish
-GET - /api/organization_structure/:id - :id boyicha alohida olish
-```
-### Hududiy bo'linma
-```
-GET - /api/regional_border/all - hammasini olish
-GET - /api/regional_border/:id - :id boyicha alohida olish
-```
-### Vaksinatsiya bo'linma
-```
-GET - /api/vactination/all - hammasini olish
-GET - /api/vactination/:id - :id boyicha alohida olish
-```
-### Video bo'linma
-```
-GET - /api/video/all - hammasini olish
-GET - /api/video/:id - :id boyicha alohida olish
 ```
 
 
